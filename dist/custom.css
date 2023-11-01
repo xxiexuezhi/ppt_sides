@@ -1,0 +1,59 @@
+.reveal .slides {
+  /* background: #fff; */
+  /* text-align: left; */
+}
+
+section > ul > li {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  text-align: left;
+}
+
+section > ul > li:first-child > p {
+  margin-top: 10px !important;
+}
+
+div.subsection > ul {
+  width: 100%;
+}
+
+div.subsection > ul > li:first-child > p {
+  margin-top: 0 !important;
+}
+
+/* Generating novel proteins */
+
+div.design-validation {
+  margin: 3rem 2rem 0 2rem;
+  column-gap: 4rem;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  text-align: left;
+}
+
+/* End */
+
+div.list-no-bullet ul {
+  margin-left: 3rem;
+  list-style: none;
+}
+
+div.list-no-bullet span.bullet {
+  text-indent: -3rem;
+  display: inline-block;
+  text-align: left;
+}
+
+div.list-no-bullet li:first-child {
+  margin-top: 0rem;
+}
+
+.reveal .h-attr {
+  margin: 6rem 4rem 2rem 4rem;
+  text-align: left;
+}
+
+div.slide-background-content > iframe {
+  width: 101% !important;
+  max-width: 101% !important;
+}
