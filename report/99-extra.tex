@@ -1,0 +1,249 @@
+We considered using ELASPIC in combination with a kinetic models of cell metabolism \cite{bordbar_personalized_2015} or cell growth and replication \cite{karr_whole-cell_2012} in order to predict the effect of mutations on cell function. However, even when used as part of a kinetic model, the $\Delta \Delta G$ predicted by ELASPIC may not be more informative than a deleteriousness score predicted by Provean or another sequence-based tool, especially as the accuracy of the models and ELASPIC predictions remains limited.
+
+One interesting application would be to attempt to predict whether a mutation is going to be gain-of-function or loss-of-function. This would be of great importance in predicting the effect of cancer mutations. For example, when trying to model a cancer protein-protein interaction network, it is important to know if a cancer mutations are going to remove particular nodes from the network or conversely are going to increase the activity of a protein. This has been attempted previously: most notably in OncodriveRole. The difficulty arises in the biased dataset... mutations affecting tumour suppressor genes are predicted to be loss of function, while mutations affecting oncogenes are gain of function. Another application would be in determining the disease caused by mutations. It has been observed in genetic studies of Mendelian disease that similar mutations in the same protein can lead to markedly different phenotypes. In both of those cases, the mutations are likely to be deleterious. But analysing the effect of mutation on protein structure may help us explain why.
+
+The most widely-used program for predicting the deleteriousness of a mutation is Sorting Intolerant from Tolerant (SIFT) \cite{ng_sift:_2003}. SIFT runs PSI-Blast to create a multiple sequence alignment for the query protein, and computes a conservation score by looking at the likelihood of the wildtype and mutant amino acids occurring at a given position in the alignment. While SIFT is a well-established tool in the field, it is difficult to compile and install on a local machine. Furthermore, multiple sequence alignments constructed by SIFT can be several megabytes in size, and caching this data for an entire proteome would require a non-trivial amount of storage space.
+
+Another popular sequence-based algorithm is Provean \cite{choi_predicting_2012}. Provean also creates a multiple sequence alignment for the query protein. However, instead of using the entire alignment, Provean runs CD-HIT to select under 50 representative sequences, referred to as the ``supporting set'', which capture the diversity of the alignment. The supporting set for a particular protein can be precalculated and stored for future use. If a supporting set is available, calculating the Provean score takes several seconds per mutation. Provean is reported to achieve similar performance to SIFT \cite{choi_predicting_2012}. However, unlike SIFT, it is freely available under the GPLv3 license, it compiles easily and it runs on all modern Linux distributions.
+
+Many other tools have been developed that offer various advantages over SIFT / Provean. PolyPhen-2 \cite{adzhubei_predicting_2001} uses support vector machines to combine a conservation score with different sequential and structural features of the wildtype and mutant residue. However, since PolyPhen-2 is trained on a dataset of human deleterious mutations, it is difficult to use in downstream applications, as one would have to make sure to exclude the PolyPhen-2 training set throughout the training and validation process. FATHMM \cite{shihab_ranking_2014} constructs a hidden Markov model based on the alignment, and is reported to achieve marginally higher accuracy than SIFT / Provean. Other techniques offering various advantages over SIFT / Provean include MutPred \cite{li_automated_2009}, MutationAssesor \cite{network_integrated_2011}, CADD \cite{kircher_general_2014}, CONDEL \cite{gonzalez-perez_improving_2011}, and others.
+
+
+
+- Existing approaches remain limited in their ability to predict disease-causing variants. In a study of 1571 mutations of the CFTR gene causing cystic fibrosis, (SIFT, PolyPhen, PANTHER)
+
+The local pipeline still requires a local copy of the Blast nr database.
+
+We used the MODELLER software package to perform all homology modeling.
+
+``MODELLER uses simulated annealing cycles along with a minimal forcefield and spatial restraints -- generally Gaussian interatomic probability densities extracted from the template structure with database-derived statistics determining the distribution width—to rapidly generate candidate structures of the target sequence from the provided template sequence.''
+
+
+Statistical potentials
+
+Physics-based methods
+the electrostatic, van der Waals, solvent accessible surface area, and entropy terms
+
+Concoord/Poisson-Boltzmann surface area (CC/PBSA server)
+
+The central dogma of biology is that DNA is transcribed into RNA which is translated into Protein.
+
+
+Some algorithms rely on the conservation of the residue in multiple sequence alignments.
+
+Predicting protein thermal stability changes upon point mutations using statistical potentials: Introducing HoTMuSiC
+
+
+mCSM  (graph-based signatures), MAESTRO  (multi-agent machine learning), CC/PBSA (Concoord/Poisson-Boltzmann surface area) ,
+
+  - MAESTRO implements a multi-agent machine learning system.
+
+  - Structure based tools AUTO-MUTE [7], CUPSAT [8], Dmutant [9], FoldX [10], Eris [11], PoPMuSiC [12], SDM [13] or mCSM [14] usually perform better than the sequence based counterparts. Recently, SDM and mCSM have been integrated into a new method called DUET [15].
+
+INPS: predicting the impact of non-synonymous variations on protein stability from sequence
+
+  - \url{http://bioinformatics.oxfordjournals.org/content/31/17/2816.long}
+
+  - Here, we describe INPS, a novel approach for annotating the effect of non-synonymous mutations on the protein stability from its sequence.
+
+  - \cite{fariselli_inps:_2015}
+
+FoldX
+
+PoPMuSiC
+
+RosettaCM
+
+mCSM: predicting the effects of mutations in proteins using graph-based signatures.
+
+  - \url{http://www.ncbi.nlm.nih.gov/pubmed/24281696}
+
+  - ``To understand the roles of mutations in disease, we have evaluated their impacts not only on protein stability but also on protein-protein and protein-nucleic acid interactions''.
+
+  - \cite{pires_mcsm:_2014}
+
+
+Predicting Binding Free Energy Change Caused by Point Mutations with Knowledge-Modified MM/PBSA Method
+
+  - \url{http://journals.plos.org/ploscompbiol/article?id=10.1371%2Fjournal.pcbi.1004276}
+
+  - ``The core of the SAAMBE method is a modified molecular mechanics Poisson-Boltzmann Surface Area (MM/PBSA) method with residue specific dielectric constant''.
+
+  - \cite{petukh_predicting_2015}
+
+
+
+% Benchmarks
+
+Rosetta benchmark \cite{o_conchuir_web_2015}
+
+Benchmark showing Rosetta doing poorly: \cite{potapov_assessing_2009}
+
+I-Mutant2, DMutant, CUPSAT, FoldX \cite{khan_performance_2010}
+
+
+Provean score and, in the case of the core predictor, BLOSUM62 matrix score, where the only sequence-based featurs selected through feature elimination.
+
+Out of the features that remain after feature elimination.
+``By weighting the individual averaged energy contributions (sepa-
+rately for folding free energies and protein-protein binding affinities)
+water contributions are implicitly taken into account.''
+
+
+- Use covariation between amino acids in addition to the conservation score to predict the impact of mutations, as described by Kowarsch et. al. \cite{kowarsch_correlated_2010}.
+
+- Standard conservation metrics, such as Provean, may predict a certain substitution to be benign because it occurs in other organisms. However, this does not take into account any potentially covarying mutations that mask the deleterious effect of the mutation in question.
+
+- As described in [], balancing the training set can significantly improve performance. However, with Provean balancing the training set can bias the result because most mutations are to unconserved amino acids (often alanine) and
+
+
+% Replace FoldX with MODELLER
+
+- Use multiple templates when building the homology models.
+- Create multiple models and choose the one with the highest DOPE score.
+- Refine the model using molecular dynamics, although it has been reported that long-term MD is not useful for optimizing structures in most cases \cite{raval_refinement_2012}.
+
+
+Cystic fibrosis
+
+
+
+Long QT syndrome
+
+  - Assessment of the predictive accuracy of five \textit{in-silico} prediction tools, alone or in combination, and two meta-servers to classify long QT syndrome gene mutations.
+
+  - \url{http://www.ncbi.nlm.nih.gov/pubmed/25967940}
+
+
+% === Published post factum ===
+
+FireProt: Energy- and Evolution-Based Computational Design of Thermostable Multiple-Point Mutants
+
+  - \url{http://journals.plos.org/ploscompbiol/article?id=10.1371%2Fjournal.pcbi.1004556}
+
+  - Predict the structural effect of multiple mutations.
+
+  - ``Stability effects of all possible single-point mutations were estimated using the <BuildModel> module of FoldX''.
+
+  - We demonstrate that thermostability of the model enzymes haloalkane dehalogenase DhaA and γ-hexachlorocyclohexane dehydrochlorinase LinA can be substantially increased.
+
+  - \cite{bednar_fireprot:_2015}
+
+
+
+HOPE THAT PROVEAN WOULD AT LEAST PARTIALLY MAKE UP FOR THE LIMITING ASSUMPTION THAT THE BACKBONE REMAINS STABLE BETWEEN MUTATIONS.
+
+SCIENTIFICALLY INTERESTING TO SEE WHAT EFFECT MD RELAXATIONS WOULD HAVE ON THE PERFORMANCE OF THE ALGORITHM.
+% \subsection{Protein-protein interactions}
+
+Predict PPIs: PRISM: Protein interaction by structure matching.
+
+% \subsection{Protein-ligand interactions}
+
+- drugging protein-protein interfaces \cite{wells_reaching_2007}
+
+Platinum: Protein-ligand affinity change upon mutation database.
+
+- \url{http://bleoberis.bioc.cam.ac.uk/platinum/}
+
+BioLiP is a semi-manually curated database for high-quality, biologically relevant ligand-protein binding interactions.
+
+- \url{http://zhanglab.ccmb.med.umich.edu/BioLiP/}
+
+- The structure data are collected primarily from the Protein Data Bank, with biological insights mined from literature and other specific databases.
+
+% \subsection{Protein-DNA/RNA interactions}
+
+ProNIT
+
+RBPDB: a database of RNA-binding specificities
+
+\url{http://rbpdb.ccbr.utoronto.ca}
+
+Paper: \url{http://nar.oxfordjournals.org/content/39/suppl_1/D301}
+
+% \subsection{Protein-peptide interactions}
+
+ELM
+
+% \subsection{Phosphorylated residue-mediated interactions}
+
+
+% \section{ELASPIC v2.0}
+% Improve domain definitions and alignments
+
+eSCOP
+
+Gene3D
+
+- Use sequence profiles (e.g. Pfam or Gene3D) to guide the alignment.
+
+``The resulting transformer has then learned a supervised, sparse, high-dimensional categorical embedding of the data.''
+
+% \url{http://scikit-learn.org/stable/auto_examples/ensemble/plot_feature_transformation.html\#example-ensemble-plot-feature-transformation-py}
+
+
+A more promising outcome of ELASPIC is in its performance on the. In the set of features selected through feature elimination, there are both sequence-based features and structure-based features. The most important sequence-based feature is the Provean score. Results of feature elimination support the view that electrostatics, van der Waals forces and entropy are the main forces determining the effect of mutations, as proposed by Benedix \textit{et al.} in the Concoord/Poisson-Boltzmann surface area model (Equation \ref{eq:benedix_et_al}).
+
+\begin{equation} \label{eq:benedix_et_al}
+    \Delta G_{CC/PBSA} = \Delta G_{electrostatic} + \Delta G_{van\ der\ Waals} + \Delta G_{entropy}
+\end{equation}
+
+
+
+The improved ELASPIC predictors could then be applied in other settings, such as designing more thermostable therapeutics with a higher affinity for their target \cite{seeliger_protein_2010,bednar_fireprot:_2015}. If the ELASPIC predictor can achieve reasonable results for mutations affecting multiple amino acids, it could be used in protein design, to create domains with increased stability and protein interfaces with increased affinity.
+
+
+
+## Datasets
+
+\subsection{Interface}
+
+% Datasets
+
+Program        | Links
+---------------|---------------------------
+Guerois et al. | \url{http://dx.doi.org/10.1016/S0022-2836(02)00442-4}
+Potapov et al. | \url{http://dx.doi.org/10.1093/protein/gzp030}
+Kellogg et al. | \url{http://dx.doi.org/10.1002/prot.22921}
+Protherm*      |
+Protherm       |
+
+Macromolecular benchmarks
+
+ProTherm \cite{Zeng2011} \cite{kumar_protherm_2006}
+
+% Interface
+
+[ASEdb](\url{http://nic.ucsf.edu/asedb/})
+: - [ASEdb: a database of alanine mutations and their effects on the free energy of binding in protein interactions](\url{http://www.ncbi.nlm.nih.gov/pubmed/11294795})
+
+[SKEMPI](\url{http://life.bsc.es/pid/mutation_database/database.html})
+: - [SKEMPI: a Structural Kinetic and Energetic database of Mutant Protein Interactions and its use in empirical models](\url{http://bioinformatics.oxfordjournals.org/content/28/20/2600})
+
+[AB-Bind](\url{http://onlinelibrary.wiley.com/doi/10.1002/pro.2829/full})
+: -
+AB-Bind: Antibody binding mutational database for computational affinity predictions.
+
+  - Our Antibody-Bind (AB-Bind) database includes 1101 mutants with experimentally determined changes in binding free energies (ΔΔG) across 32 complexes.
+
+  - \url{http://www.ncbi.nlm.nih.gov/pubmed/26473627}
+
+  - \cite{sirin_ab-bind:_2016}
+
+
+% Protein folding
+
+[PFD](\url{http://pfd.med.monash.edu/public_html/index.php})
+: - [Paper 1](\url{http://www.ncbi.nlm.nih.gov/pubmed/15608196}), [Paper 2](\url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1781104})
+
+
+[KineticDB](\url{http://kineticdb.protres.ru/db/index.pl})
+: - [Paper](\url{http://nar.oxfordjournals.org/content/37/suppl_1/D342.full})
+
+
+[ACPro](\url{https://www.ats.amherst.edu/protein/})
+: - [A comprehensive database of verified experimental data on protein folding kinetics](\url{http://www.ncbi.nlm.nih.gov/pubmed/25229122})
+  - $k_{f}$ only
+  - Correlates with contact order
+  - References ``folding consortium organized by Plaxco''
